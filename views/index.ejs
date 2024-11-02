@@ -1,0 +1,29 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="indexMainContainer">
+        <div class ="indexImageContainer">
+            <h2>Select a <u>subject</u> and click the button to show which book you should read next!</h2>
+        </div>
+        <div class="formContainer">
+            <form action="/selection" method="POST">
+                <select name="selectedSubject" id="subjects" value="fiction">
+                    <option selected="selected">fiction</option>
+                    <option value="adventure">adventure</option>
+                    <option value="fantasy">fantasy</option>
+                    <option value="fiction">fiction</option>
+                    <option value="horror">horror</option>
+                    <option value="history">history</option>
+                    <option value="humor">humor</option>
+                    <option value="mystery">mystery</option>
+                    <option value="non-fiction">non-fiction</option>
+                    <option value="science fiction">science fiction</option>
+                    <option value="romance">romance</option>
+                    <option value="thriller">thriller</option>
+                    <option value="western">western</option>   
+                </select>
+                <button type="submit">Pick My Book!</button>
+            </form>
+        </div>
+    </div>
+
+<%- include("partials/footer.ejs") %>
