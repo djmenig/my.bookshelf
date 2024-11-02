@@ -7,8 +7,9 @@ This webapp was created for the Udemy Complete Web Development Boot Camp by Ange
 Open Library is the chosen API for this project: https://openlibrary.org/developers/api
 
 ### The project showcases the following skills:
+- Front-end (HTML, CSS, JavaScript)
 - Use of a public API
-- Experience with Express/Node.js for server-side programming
+- Express/Node.js for server-side programming
 - Demonstrate ability to Create Read Update and Delete data in a PostgreSQL Database to persist data.
 
 ## Current web url for *Bookshelf*
