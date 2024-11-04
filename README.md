@@ -1,4 +1,4 @@
-# Bookshelf
+# my.Bookshelf
 
 This webapp was created for the Udemy Complete Web Development Boot Camp by Angela Yu for the "Book Notes" Capstone Project.
 
