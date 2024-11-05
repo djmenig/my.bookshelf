@@ -1,5 +1,5 @@
 {
-  "name": "bookshelf",
+  "name": "my.bookshelf",
   "description": "An app that serves as a record of books that you've read.",
   "version": "1.0.0",
   "main": "index.js",
