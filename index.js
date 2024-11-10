@@ -6,10 +6,30 @@ import pg from "pg";
 const app = express();
 const port = 3000;
 
-//bookdata
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-    res.render("index.ejs");
+const db = new pg.Client({
+    user: "postgres",
+    host: "localhost",
+    database: "my.Bookshelf",
+    password: "$5D21o80n$",
+    port: "5432",
+});
+db.connect();
+
+let currentUser = 1;
+
+//bookdata
+let userBookList = await getData();
+async function getData() {
+    const result = await db.query("SELECT * FROM users JOIN books ON users.id = books.user_id");
+    return result.rows;
+};
+
+app.get("/", async (req, res) => {
+    const userData = await getData();
+    res.render("index.ejs", { userBookList });
 });
 
 app.listen(port, () => {
