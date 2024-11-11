@@ -19,7 +19,7 @@
     </ul>
 </nav>
 <body>
-    <div class="bookListSection">
+    <section class="bookListSection">
         <% if(userBookList.length == 0) { %>
             <h3>Whoops! There are no books on the shelf!</h3>
         <% } else { %>
@@ -31,44 +31,16 @@
                     };
                     return star;
                 }; %>
+            <article>
                 <img />
                 <h3><%= book.title %></h3>
                 <p><%= book.notes %></p>
                 <p><%= book.date_read %></p>
                 <p class="ratingStars">Rating: <%- rating() %></p>
+            </article>
             <% }); %>
         <% }; %>
-        <% console.log("This is from index.ejs: ", userBookList) %>
-        
-        <!-- <%- include("bookentry.ejs")%> -->
-        <article>
-            <img />
-            <h3>Book title</h3>
-            <p>Book notes/summary</p>
-            <div class="rating">
-                <label>
-                    <input type="radio" name="starRating" value="1" />
-                    <span>&#9733</span>
-                </label>
-                <label>
-                    <input type="radio" name="starRating" value="2" />
-                    <span>&#9733</span>
-                </label>
-                <label>
-                    <input type="radio" name="starRating" value="3" />
-                    <span>&#9733</span>
-                </label>
-                <label>
-                    <input type="radio" name="starRating" value="4" />
-                    <span>&#9733</span>
-                </label>
-                <label>
-                    <input type="radio" name="starRating" value="5" />
-                    <span>&#9733</span>
-                </label>              
-            </div>
-        </article>
-    </div>
+    </section>
 </body>
 <footer>
     <p>&copy; 2024 Donald J. Menig. All Rights Reserved.</p>

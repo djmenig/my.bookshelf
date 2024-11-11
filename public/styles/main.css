@@ -1,19 +1,13 @@
-/* color profile: https://colorhunt.co/palette/fff8e8f7eed3aab396674636 */
+/* color profile: https://colorhunt.co/palette/faf7f0d8d2c2b174574a4947 */
+
 html {
-    background-color: #AAB396;
+    background-color: #FAF7F0;
 }
 
 * {
-    color: #F7EED3;
+    color: #4A4947;
 }
 
-h1 {
-    color: #F7EED3;
-}
-
-h2 {
-    color: #F7EED3;
-}
 
 ul {
     /* background-color: #AAB396; */
