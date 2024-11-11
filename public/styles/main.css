@@ -8,13 +8,23 @@ html {
     color: #4A4947;
 }
 
-
 ul {
-    /* background-color: #AAB396; */
+    background-color: #4A4947;
 }
 
 li {
     list-style-type: none;
     display: inline;
+}
+
+a {
+    color: #FAF7F0;
+}
+
+footer {
+    background-color: #4A4947;
+}
+footer > p {
+    color: #FAF7F0;
 }
 
