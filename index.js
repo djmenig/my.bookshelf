@@ -31,6 +31,11 @@ app.get("/", async (req, res) => {
     res.render("index.ejs", { userBookList });
 });
 
+app.post("/submit", async (req, res) => {
+    const addBook = req.body;
+    console.log(addBook);
+})
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

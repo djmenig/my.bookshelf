@@ -8,6 +8,33 @@ html {
     color: #4A4947;
 }
 
+.addBookForm {
+    display: flex;
+    flex-direction: column;
+}
+/* star rating */
+.starRatingContainer {
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    
+}
+.starRatingContainer input {
+    display: none;
+    cursor: pointer;
+}
+.starRatingContainer label {
+    color: #D8D2C2;
+    cursor: pointer;
+}
+.starRatingContainer input:checked ~ label {
+    cursor: pointer;
+    color: #4A4947
+}
+
 ul {
     background-color: #4A4947;
 }

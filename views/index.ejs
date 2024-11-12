@@ -37,9 +37,14 @@
                 <p><%= book.notes %></p>
                 <p><%= book.date_read %></p>
                 <p class="ratingStars">Rating: <%- rating() %></p>
+
+                <!-- add openlibrary link -->
+                
+
             </article>
             <% }); %>
         <% }; %>
+        <%- include("partials/addBookForm.ejs") %>
     </section>
 </body>
 <footer>
