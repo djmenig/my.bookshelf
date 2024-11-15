@@ -27,13 +27,17 @@ async function getData() {
 };
 
 app.get("/", async (req, res) => {
-    const userData = await getData();
     res.render("index.ejs", { userBookList });
 });
 
 app.post("/submit", async (req, res) => {
-    const addBook = req.body;
-    console.log(addBook);
+    const title = req.body.bookTitle;
+    const notes = req.body.notes;
+    const rating = req.body.starRating;
+    const date = req.body.date_read;
+    await db.query("INSERT INTO books (user_id, title, notes, rating, date_read) VALUES ($1, $2, $3, $4, $5)", [currentUser, title, notes, rating, date]);
+    userBookList = await getData();
+    res.redirect("/");
 })
 
 app.listen(port, () => {
