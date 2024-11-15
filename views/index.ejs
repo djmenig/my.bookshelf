@@ -15,9 +15,10 @@
 <nav>
     <ul>
         <li><a>User: </a></li>
-        <li><a>Add Book</a></li>
+        <li><button id="addBookBtn">Add Book</button>
     </ul>
 </nav>
+<%- include("partials/addBookForm.ejs") %>
 <body>
     <section class="bookListSection">
         <% if(userBookList.length == 0) { %>
@@ -44,7 +45,6 @@
             </article>
             <% }); %>
         <% }; %>
-        <%- include("partials/addBookForm.ejs") %>
     </section>
 </body>
 <footer>

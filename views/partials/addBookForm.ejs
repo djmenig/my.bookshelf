@@ -1,23 +1,47 @@
-<div class="addBookFormContainer">
-    <form class="addBookForm" action="submit" method="POST">
-        <input type="text" name="bookTitle" placeholder="Book Title" required />
-        <label for="starFieldset" class="formText">Book Rating: </label>
-        <fieldset class="starRatingContainer" name="starRating" id="starFieldset" required>
-            <input type="radio" name="starRating" id="1stStar" value="5" />
-            <label for="1stStar" class="ratingStar">&#9733</label>
-            <input type="radio" name="starRating" id="2ndStar" value="4" />
-            <label for="2ndStar" class="ratingStar">&#9733</label>
-            <input type="radio" name="starRating" id="3rdStar" value="3" />
-            <label for="3rdStar" class="ratingStar">&#9733</label>
-            <input type="radio" name="starRating" id="4thStar" value="2" />
-            <label for="4thStar" class="ratingStar">&#9733</label>
-            <input type="radio" name="starRating" id="5thStar" value="1" />
-            <label for="5thStar" class="ratingStar">&#9733</label>
-        </fieldset>
-        <label for="dateRead" class="formText">Date Read: </label>
-        <input type="date" name="date_read" id="dateRead" />
-        <label for="notes" class="formText">Summary / Notes: </label>
-        <textarea name="notes" rows="5"></textarea>
-        <button type="submit">Submit</button>
-    </form>
+<div id="addBookModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="addBookFormContainer">
+            <form class="addBookForm" action="submit" method="POST">
+                <input type="text" name="bookTitle" placeholder="Title of New Book" required />
+                <label for="starFieldset" class="formText">Book Rating: </label>
+                <fieldset class="starRatingContainer" name="starRating" id="starFieldset" required>
+                    <input type="radio" name="starRating" id="1stStar" value="5" />
+                    <label for="1stStar" class="ratingStar">&#9733</label>
+                    <input type="radio" name="starRating" id="2ndStar" value="4" />
+                    <label for="2ndStar" class="ratingStar">&#9733</label>
+                    <input type="radio" name="starRating" id="3rdStar" value="3" />
+                    <label for="3rdStar" class="ratingStar">&#9733</label>
+                    <input type="radio" name="starRating" id="4thStar" value="2" />
+                    <label for="4thStar" class="ratingStar">&#9733</label>
+                    <input type="radio" name="starRating" id="5thStar" value="1" />
+                    <label for="5thStar" class="ratingStar">&#9733</label>
+                </fieldset>
+                <label for="dateRead" class="formText">Date Read: </label>
+                <input type="date" name="date_read" id="dateRead" />
+                <label for="notes" class="formText">Summary / Notes: </label>
+                <textarea name="notes" rows="5"></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var modal = document.getElementById("addBookModal");
+        var btn = document.getElementById("addBookBtn");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+</script>
