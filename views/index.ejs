@@ -14,7 +14,7 @@
 </header>
 <nav>
     <ul>
-        <li><a>User: </a></li>
+        <li><a><%= currentUsername %>'s Bookshelf</a></li>
         <li><button id="addBookBtn">Add Book</button>
     </ul>
 </nav>
@@ -33,7 +33,7 @@
                     return star;
                 }; %>
             <article>
-                <img />
+                <img class="bookCover" src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-L.jpg?default=false" alt="No Book Cover Image" onerror="this.src='/images/book_640.png'" />
                 <h3><%= book.title %></h3>
                 <p><%= book.notes %></p>
                 <p><%= book.date_read %></p>

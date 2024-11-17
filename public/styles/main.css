@@ -8,10 +8,6 @@ html {
     color: #4A4947;
 }
 
-.addBookForm {
-    display: flex;
-    flex-direction: column;
-}
 /* star rating */
 .starRatingContainer {
     margin: 0;

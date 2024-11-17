@@ -27,7 +27,9 @@ async function getData() {
 };
 
 app.get("/", async (req, res) => {
-    res.render("index.ejs", { userBookList });
+    const user = await db.query("SELECT username FROM users WHERE id = $1", [currentUser]);
+    const currentUsername = user.rows[0].username;
+    res.render("index.ejs", { userBookList, currentUsername });
 });
 
 app.post("/submit", async (req, res) => {
@@ -35,7 +37,10 @@ app.post("/submit", async (req, res) => {
     const notes = req.body.notes;
     const rating = req.body.starRating;
     const date = req.body.date_read;
-    await db.query("INSERT INTO books (user_id, title, notes, rating, date_read) VALUES ($1, $2, $3, $4, $5)", [currentUser, title, notes, rating, date]);
+    const result = await axios.get(`https://openlibrary.org/search.json?title=${title}`);
+    const coverId = result.data.docs[0].cover_i;
+    await db.query("INSERT INTO books (user_id, title, notes, rating, date_read, cover_id) VALUES ($1, $2, $3, $4, $5, $6)", [currentUser, title, notes, rating, date, coverId]);
+    console.log(coverId);
     userBookList = await getData();
     res.redirect("/");
 })
