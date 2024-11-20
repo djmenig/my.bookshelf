@@ -21,6 +21,13 @@ h1 {
     font-family: "libre baskerville", serif;
 }
 
+h2 {
+    font-family: "Licorice";
+    font-size: 6vw;
+    margin: 0;
+    color: #B17457;
+}
+
 ul {
     background-color: #4A4947;
     padding: .5rem;
@@ -58,13 +65,16 @@ a {
     font-family: "libre baskerville", serif;
 }
 
-.deleteButton {
+.deleteButton, .editButton {
     border: none;
     text-align: center;
     background-color: white;
     color: #4A4947;
+    font-size: 1rem;
+    margin-top: .5rem;
+    margin-right: .5rem;
 }
-.deleteButton:hover {
+.deleteButton:hover, .editButton:hover {
     color: #4A4947AA;
 }
 

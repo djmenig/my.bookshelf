@@ -13,7 +13,7 @@
 <body>
     <header>
         <h1>my.Bookshelf</h1>
-        <h2>A virtual bookshelf!</h2>
+        <h2>a virtual bookshelf!</h2>
         <p>This space is meant to serve as a place to display a read book list; along with notes and/or summary, a book rating, and the date the book was read.</p>
     </header>
     <nav>
@@ -47,10 +47,13 @@
                         <p><%= book.date_read %></p>
                         <p class="ratingStars">My Rating: <%- rating() %></p>
                     </div>
-                    <form action="/deleteBook" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?')">
-                        <input type="hidden" name="bookTitle" value="<%= book.title %>" />
-                        <button type="submit" class="deleteButton"><i class="fa-regular fa-trash-can"></i></button>
-                    </form>
+                    <div>
+                        <form action="/deleteBook" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?')">
+                            <input type="hidden" name="bookTitle" value="<%= book.title %>" />
+                            <button type="submit" class="deleteButton"><i class="fa-regular fa-trash-can"></i></button>
+                        </form>
+                        <button id="editButton" class="editButton"><i class="fa-regular fa-pen-to-square"></i></button>
+                    </div>
                     <!-- add openlibrary link -->
                     
 
