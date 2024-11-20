@@ -26,12 +26,15 @@ async function getData() {
     return result.rows;
 };
 
+//homepage: initial data fetch and render of user & books tables
 app.get("/", async (req, res) => {
+    userBookList = await getData();
     const user = await db.query("SELECT username FROM users WHERE id = $1", [currentUser]);
     const currentUsername = user.rows[0].username;
     res.render("index.ejs", { userBookList, currentUsername });
 });
 
+//add a book to database: receives from addBookForm.ejs (modal)
 app.post("/submit", async (req, res) => {
     const title = req.body.bookTitle;
     const notes = req.body.notes;
@@ -40,10 +43,14 @@ app.post("/submit", async (req, res) => {
     const result = await axios.get(`https://openlibrary.org/search.json?title=${title}`);
     const coverId = result.data.docs[0].cover_i;
     await db.query("INSERT INTO books (user_id, title, notes, rating, date_read, cover_id) VALUES ($1, $2, $3, $4, $5, $6)", [currentUser, title, notes, rating, date, coverId]);
-    console.log(coverId);
-    userBookList = await getData();
     res.redirect("/");
-})
+});
+
+//Delete a book: receives from index.ejs delete book button
+app.post("/deleteBook", async (req, res) => {
+    await db.query("DELETE FROM books WHERE title = $1", [req.body.bookTitle]);
+    res.redirect("/");
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
