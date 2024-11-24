@@ -1,6 +1,6 @@
 <div id="addBookModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="addClose">&times;</span>
         <div class="addBookFormContainer">
             <form class="addBookForm" action="submit" method="POST">
                 <input type="text" name="bookTitle" placeholder="Title of New Book" required />
@@ -32,18 +32,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        var modal = document.getElementById("addBookModal");
-        var btn = document.getElementById("addBookBtn");
-        var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function() {
-            modal.style.display = "block";
+        const addModal = document.getElementById("addBookModal");
+        const addBtn = document.getElementById("addBookBtn");
+        const addSpan = document.getElementsByClassName("addClose")[0];
+        addBtn.onclick = function() {
+            addModal.style.display = "block";
         }
-        span.onclick = function() {
-            modal.style.display = "none";
+        addSpan.onclick = function() {
+            addModal.style.display = "none";
         }
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == addModal) {
+                addModal.style.display = "none";
             }
         }
     });

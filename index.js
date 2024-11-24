@@ -46,6 +46,19 @@ app.post("/submit", async (req, res) => {
     res.redirect("/");
 });
 
+//update existing book on database: receives from editBookForm.ejs (modal)
+app.post("/edit", async (req, res) => {
+    const bookId = req.body.bookId;
+    const title = req.body.bookTitle;
+    const notes = req.body.notes;
+    const rating = req.body.starRating;
+    const date = req.body.date_read;
+    const result = await axios.get(`https://openlibrary.org/search.json?title=${title}`);
+    const coverId = result.data.docs[0].cover_i;
+    await db.query("UPDATE books SET title = $1, notes = $2, rating = $3, date_read = $4, cover_id = $5 WHERE book_id = $6", [title, notes, rating, date, coverId, bookId]);
+    res.redirect("/");
+});
+
 //Delete a book: receives from index.ejs delete book button
 app.post("/deleteBook", async (req, res) => {
     await db.query("DELETE FROM books WHERE title = $1", [req.body.bookTitle]);

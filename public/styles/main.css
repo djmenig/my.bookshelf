@@ -7,12 +7,20 @@ html {
 body {
     color: #4A4947;
     font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    margin: 0;
 }
 
 header {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+main {
+    flex: 1;
 }
 
 h1 {
@@ -22,10 +30,15 @@ h1 {
 }
 
 h2 {
-    font-family: "Licorice";
+    font-family: "Licorice", cursive;
     font-size: 6vw;
     margin: 0;
     color: #B17457;
+}
+
+header p {
+    text-align: center;
+    font-size: .75rem;
 }
 
 ul {
@@ -47,7 +60,18 @@ a {
 }
 .userBookshelfName {
     font-family: "Libre baskerville", serif;
+    font-size: 1.25rem;
 }
+
+.noBooksMessage {
+    font-family: "Licorice", cursive;
+    font-size: 3rem;
+    color: #D8D2C2;
+    justify-self: center;
+    text-align: center;
+    transform: rotate(-15deg);
+}
+
 .bookCard {
     display: flex;
     gap: 5%;
@@ -57,14 +81,50 @@ a {
     border-radius: 5px;
     box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.bookInfoContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 .bookCover {
     width: 30%;
 }
+.bookInfoContainer h3 {
+    text-decoration: underline;
+}
 .bookNotes {
     font-family: "libre baskerville", serif;
+    font-size: .90rem;
 }
-
+.dateAndRating {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+.date {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: .9rem;
+}
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: .9rem;
+}
+.dateAndRating h4 {
+    margin: 0;
+    padding: 0;
+}
+.dateAndRating p {
+    margin: 0;
+}
 .deleteButton, .editButton {
     border: none;
     text-align: center;
@@ -131,7 +191,7 @@ footer > p {
     width: auto;
 }
 
-.close {
+.addClose, .editClose {
     color: #aaa;
     position: absolute;
     top: .5rem;
@@ -141,8 +201,8 @@ footer > p {
     margin: 0;
 }
 
-.close:hover,
-.close:focus {
+.addClose:hover, .addClose:focus,
+.editClose:hover, .editClose:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

@@ -1,0 +1,51 @@
+<div id="editBookModal" class="modal">
+    <div class="modal-content">
+        <span class="editClose">&times;</span>
+        <div class="addBookFormContainer">
+            <form class="addBookForm" action="edit" method="POST">
+                <input type="text" name="bookTitle" value=" <%= book.title %> " required />
+                <div>
+                    <label for="editStarFieldset" class="formText">Book Rating: </label>
+                    <fieldset class="starRatingContainer" name="starRating" id="editStarFieldset" required>
+                        <input type="radio" name="starRating" id="edit1stStar" value="5" <%= book.rating === 5 ? 'checked' : '' %> />
+                        <label for="edit1stStar" class="ratingStar">&#9733</label>
+                        <input type="radio" name="starRating" id="edit2ndStar" value="4" <%= book.rating === 4 ? 'checked' : '' %> />
+                        <label for="edit2ndStar" class="ratingStar">&#9733</label>
+                        <input type="radio" name="starRating" id="edit3rdStar" value="3" <%= book.rating === 3 ? 'checked' : '' %> />
+                        <label for="edit3rdStar" class="ratingStar">&#9733</label>
+                        <input type="radio" name="starRating" id="edit4thStar" value="2" <%= book.rating === 2 ? 'checked' : '' %> />
+                        <label for="edit4thStar" class="ratingStar">&#9733</label>
+                        <input type="radio" name="starRating" id="edit5thStar" value="1" <%= book.rating === 1 ? 'checked' : '' %> />
+                        <label for="edit5thStar" class="ratingStar">&#9733</label>
+                    </fieldset>
+                </div>
+                <div>
+                    <label for="dateRead" class="formText">Date Read: </label>
+                    <input type="date" name="date_read" id="dateRead" value="<%- book.date_read %>"/>
+                </div>
+                <textarea name="notes" rows="5"><%= book.notes %></textarea>
+                <input type="hidden" name="bookId" value="<%= book.book_id %>" />
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const editModal = document.getElementById("editBookModal");
+        const editBtn = document.getElementById("editButton");
+        const editSpan = document.getElementsByClassName("editClose")[0];
+        editBtn.onclick = function() {
+            editModal.style.display = "block";
+        }
+        editSpan.onclick = function() {
+            editModal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == editModal) {
+                editModal.style.display = "none";
+            }
+        }
+    });
+</script>

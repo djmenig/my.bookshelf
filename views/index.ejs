@@ -16,20 +16,20 @@
         <h2>a virtual bookshelf!</h2>
         <p>This space is meant to serve as a place to display a read book list; along with notes and/or summary, a book rating, and the date the book was read.</p>
     </header>
-    <nav>
-        <ul>
-            <li><a class="userBookshelfName"><%= currentUsername %>'s Bookshelf</a></li>
-            <li><button id="addBookBtn">Add Book</button>
-        </ul>
-    </nav>
+    <main>
+        <nav>
+            <ul>
+                <li><a class="userBookshelfName"><%= currentUsername %>'s Bookshelf</a></li>
+                <li><button id="addBookBtn">Add Book</button>
+            </ul>
+        </nav>
 
-    <!-- modal  -->
-    <%- include("partials/addBookForm.ejs") %>
-
-
+        <!-- modal  -->
+        <%- include("partials/addBookForm.ejs") %>
+        
         <section class="bookListSection">
             <% if(userBookList.length == 0) { %>
-                <h3>Whoops! There are no books on the shelf!</h3>
+                <h3 class="noBooksMessage">Whoops!<br>There are no books on the shelf!</h3>
             <% } else { %>
                 <% userBookList.forEach((book) => { %>
                     <% function rating() {
@@ -44,14 +44,23 @@
                     <div class="bookInfoContainer">
                         <h3><%= book.title %></h3>
                         <p class="bookNotes">"<%= book.notes %>"</p>
-                        <p><%= book.date_read %></p>
-                        <p class="ratingStars">My Rating: <%- rating() %></p>
+                        <div class="dateAndRating">
+                            <div class="date">
+                                <h4>Date Read: </h4>
+                                <p><%= book.date_read %></p>
+                            </div>
+                            <div class="rating">
+                                <h4>My Rating:</h4>
+                                <p class="ratingStars"><%- rating() %></p>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <form action="/deleteBook" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?')">
                             <input type="hidden" name="bookTitle" value="<%= book.title %>" />
                             <button type="submit" class="deleteButton"><i class="fa-regular fa-trash-can"></i></button>
                         </form>
+                        <%- include("partials/editBookForm.ejs", { book }) %>
                         <button id="editButton" class="editButton"><i class="fa-regular fa-pen-to-square"></i></button>
                     </div>
                     <!-- add openlibrary link -->
@@ -61,9 +70,10 @@
                 <% }); %>
             <% }; %>
         </section>
-
+    </main>
     <footer>
         <p>&copy; 2024 Donald J. Menig. All Rights Reserved.</p>
     </footer>
+    <!-- font awesome icons script -->
     <script src="https://kit.fontawesome.com/d743f25c11.js" crossorigin="anonymous"></script>
 </body>
