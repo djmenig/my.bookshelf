@@ -1,8 +1,8 @@
-# Bookshelf
+# my.Bookshelf
 
 This webapp was created for the Udemy Complete Web Development Boot Camp by Angela Yu for the "Book Notes" Capstone Project.
 
-*Bookshelf* is a simple web app that uses the CRUD method to keep a record of books that you've read, and allows you to associate the following data with each book: rating, notes, and date read.  
+*my.Bookshelf* is a simple web app that uses the CRUD method to keep a record of books that you've read, and allows you to associate the following data with each book: rating, notes, and date read.  
 
 Open Library is the chosen API for this project: https://openlibrary.org/developers/api
 
