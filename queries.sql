@@ -5,7 +5,7 @@ username VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE books (
-user_id INT REFERENCES users(id) UNIQUE,
+user_id INT REFERENCES users(id),
 title VARCHAR(255) NOT NULL,
 notes TEXT,
 rating INT,
