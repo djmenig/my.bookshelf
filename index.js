@@ -19,8 +19,8 @@ app.use(express.static("public"));
 
 //remote connection (supabase.com)
 const db = new pg.Client({
-    user: "postgres.yvvpelvvczbptgpgcubs",
-    host: "aws-0-us-east-2.pooler.supabase.com",
+    user: "postgres.gaqrzvbspireqzthsptb",
+    host: "aws-0-us-west-1.pooler.supabase.com",
     database: "postgres",
     password: "jZUFk1zuXEL#eB",
     port: "6543",
