@@ -8,13 +8,24 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true })); //bodyParser
 app.use(express.static("public"));
 
+//local connection
+// const db = new pg.Client({
+//     user: "postgres",
+//     host: "localhost",
+//     database: "my.Bookshelf",
+//     password: "$5D21o80n$",
+//     port: "5432",
+// });
+
+//remote connection (supabase.com)
 const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "my.Bookshelf",
-    password: "$5D21o80n$",
-    port: "5432",
+    user: "postgres.yvvpelvvczbptgpgcubs",
+    host: "aws-0-us-east-2.pooler.supabase.com",
+    database: "postgres",
+    password: "jZUFk1zuXEL#eB",
+    port: "6543",
 });
+
 db.connect();
 
 let currentUser = 1;
