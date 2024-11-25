@@ -3,7 +3,7 @@ import axios from "axios";
 import pg from "pg";
 
 const app = express();
-const port = 3000;
+const port = 6543;
 
 app.use(express.urlencoded({ extended: true })); //bodyParser
 app.use(express.static("public"));
