@@ -9,7 +9,7 @@ user_id INT REFERENCES users(id) UNIQUE,
 title VARCHAR(255) NOT NULL,
 notes TEXT,
 rating INT,
-date_read CHAR(10)
+date_read CHAR(10),
 cover_id INT,
 book_id SERIAL PRIMARY KEY
 );
