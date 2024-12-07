@@ -58,6 +58,11 @@ li {
 a {
     color: #FAF7F0;
 }
+
+button {
+    cursor: pointer;
+}
+
 .userBookshelfName {
     font-family: "Libre baskerville", serif;
     font-size: 1.25rem;
@@ -128,9 +133,7 @@ a {
 .dateAndRating p {
     margin: 0;
 }
-button {
-    cursor: pointer;
-}
+
 .deleteButton, .editButton {
     border: none;
     text-align: center;
