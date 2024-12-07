@@ -21,14 +21,14 @@
             <ul>
                 <li><a class="userBookshelfName"><%= currentUsername %>'s Bookshelf</a></li>
                 <li><button id="addBookBtn">Add Book</button>
-                <li><button id="userBtn">Log In</button></li>
+                <li><button id="loginBtn">Log In</button></li>
                 <!-- make login button dynamic -->
             </ul>
         </nav>
 
         <!-- modal  -->
         <%- include("partials/addBookForm.ejs") %>
-        
+        <%- include("partials/userLoginForm.ejs") %>
         <section class="bookListSection">
             <% if(userBookList.length == 0) { %>
                 <h3 class="noBooksMessage">Whoops!<br>There are no books on the shelf!</h3>

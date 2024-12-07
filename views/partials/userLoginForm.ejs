@@ -1,30 +1,11 @@
 <div id="userLoginModal" class="modal">
     <div class="modal-content">
-        <span class="addClose">&times;</span>
-        <div class="addBookFormContainer">
-            <form class="addBookForm" action="submit" method="POST">
-                <input type="text" name="bookTitle" placeholder="Title of New Book" required />
-                <div>
-                    <label for="starFieldset" class="formText">Book Rating: </label>
-                    <fieldset class="starRatingContainer" name="starRating" id="starFieldset" required>
-                        <input type="radio" name="starRating" id="1stStar" value="5" />
-                        <label for="1stStar" class="ratingStar">&#9733</label>
-                        <input type="radio" name="starRating" id="2ndStar" value="4" />
-                        <label for="2ndStar" class="ratingStar">&#9733</label>
-                        <input type="radio" name="starRating" id="3rdStar" value="3" />
-                        <label for="3rdStar" class="ratingStar">&#9733</label>
-                        <input type="radio" name="starRating" id="4thStar" value="2" />
-                        <label for="4thStar" class="ratingStar">&#9733</label>
-                        <input type="radio" name="starRating" id="5thStar" value="1" />
-                        <label for="5thStar" class="ratingStar">&#9733</label>
-                    </fieldset>
-                </div>
-                <div>
-                    <label for="dateRead" class="formText">Date Read: </label>
-                    <input type="date" name="date_read" id="dateRead" />
-                </div>
-                <textarea name="notes" rows="5" placeholder="Summary/Notes"></textarea>
-                <button type="submit">Submit</button>
+        <span class="loginClose">&times;</span>
+        <div class="loginFormContainer">
+            <form class="addBookForm" action="register" method="POST">
+                <input placeholder="email address" />
+                <input placeholder="password" />
+                <button type="submit">Register</button>
             </form>
         </div>
     </div>
@@ -32,18 +13,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        const addModal = document.getElementById("addBookModal");
-        const addBtn = document.getElementById("addBookBtn");
-        const addSpan = document.getElementsByClassName("addClose")[0];
-        addBtn.onclick = function() {
-            addModal.style.display = "block";
+        const loginModal = document.getElementById("userLoginModal");
+        const loginBtn = document.getElementById("loginBtn");
+        const loginSpan = document.getElementsByClassName("loginClose")[0];
+        loginBtn.onclick = function() {
+            loginModal.style.display = "block";
         }
-        addSpan.onclick = function() {
-            addModal.style.display = "none";
+        loginSpan.onclick = function() {
+            loginModal.style.display = "none";
         }
         window.onclick = function(event) {
             if (event.target == addModal) {
-                addModal.style.display = "none";
+                loginModal.style.display = "none";
             }
         }
     });

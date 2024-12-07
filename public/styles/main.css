@@ -200,7 +200,8 @@ footer > p {
     width: auto;
 }
 
-.addClose, .editClose {
+.addClose, .editClose,
+.loginClose {
     color: #aaa;
     position: absolute;
     top: .5rem;
@@ -211,7 +212,8 @@ footer > p {
 }
 
 .addClose:hover, .addClose:focus,
-.editClose:hover, .editClose:focus {
+.editClose:hover, .editClose:focus,
+.loginClose:hover, .loginClose:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
