@@ -2,10 +2,24 @@
     <div class="modal-content">
         <span class="loginClose">&times;</span>
         <div class="loginFormContainer">
-            <form class="addBookForm" action="register" method="POST">
-                <input placeholder="email address" />
-                <input placeholder="password" />
-                <button type="submit">Register</button>
+            <form class="addBookForm" action="login" method="POST">
+                <input name="username" placeholder="username" />
+                <input name="password" placeholder="password" />
+                <button type="submit" name="action" value="register">Register</button>
+                <button type="submit" name="action" value="login">Login</button>
+
+                <!-- You can include a hidden input field to indicate which action (register or login) 
+                is being taken and then handle this on the server-side. On the server-side, you can check
+                the value of the action field to determine whether the user is registering or logging in.
+                By using a hidden input field or additional button attribute (name="action"), you can send 
+                an extra piece of data with the form submission, indicating the desired action.
+
+                <form class="addBookForm" action="/handle-form" method="POST">
+                    <input type="email" name="email" placeholder="Email address" required />
+                    <input type="password" name="password" placeholder="Password" required />
+                    <button type="submit" name="action" value="register">Register</button>
+                    <button type="submit" name="action" value="login">Login</button>
+                  </form> -->
             </form>
         </div>
     </div>

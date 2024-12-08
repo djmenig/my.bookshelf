@@ -76,6 +76,24 @@ app.post("/deleteBook", async (req, res) => {
     res.redirect("/");
 });
 
+//Login into or Register user account
+app.post("/login", async (req, res) => {
+    try {
+        if (req.body.action === 'register') {
+            //register user account to db
+            await db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, req.body.password])
+            console.log(req.body.username, "has been registered!");
+            res.redirect("/");
+
+        } else if (req.body.action === 'login') {
+            //login with db user account
+    
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
