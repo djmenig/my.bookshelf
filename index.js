@@ -8,7 +8,7 @@ const port = 6543;
 app.use(express.urlencoded({ extended: true })); //bodyParser
 app.use(express.static("public"));
 
-// local connection
+////////// local connection //////////
 const db = new pg.Client({
     user: "postgres",
     host: "localhost",
@@ -30,11 +30,18 @@ db.connect();
 
 let currentUser = 1;
 
-//bookdata
+//////////bookdata//////////
 let userBookList = await getData();
+//function to retreive currentUser bookdata if it exists
 async function getData() {
-    const result = await db.query("SELECT * FROM users JOIN books ON users.id = books.user_id");
-    return result.rows;
+    try {
+        const result = await db.query("SELECT * FROM users JOIN books ON users.id = books.user_id");
+        const userBooksQuery = await db.query("SELECT * FROM books WHERE user_id = $1", [currentUser]);
+        // return result.rows;
+        return userBooksQuery.rows;
+    } catch (err) {
+        console.log("No book data associated with current user id.");
+    }
 };
 
 //homepage: initial data fetch and render of user & books tables
@@ -80,11 +87,19 @@ app.post("/deleteBook", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         if (req.body.action === 'register') {
-            //register user account to db
-            await db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, req.body.password])
-            console.log(req.body.username, "has been registered!");
-            res.redirect("/");
-
+            //register user account to db if username does not exist
+            const result = await db.query("SELECT * FROM users WHERE username = $1", [req.body.username]);
+            if (result.rows.length > 0) {
+                res.send("Username already exists. Please go back and choose another username or login.");
+            } else {
+                await db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, req.body.password])
+                console.log(req.body.username, "has been registered!");
+                const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [req.body.username]);
+                currentUser = usernameQuery.rows[0].id;
+                console.log("Username Query: ", usernameQuery.rows[0].id);
+                console.log("currentUser: ", currentUser);
+                res.redirect("/");
+            }
         } else if (req.body.action === 'login') {
             //login with db user account
     
