@@ -104,7 +104,19 @@ app.post("/login", async (req, res) => {
             }
         } else if (req.body.action === 'login') {
             //login with db user account
-    
+            const result = await db.query("SELECT * FROM users WHERE username = $1", [req.body.username]);
+            if (result.rows.length > 0) {
+                //check password
+                if (result.rows[0].password === req.body.password) {
+                    currentUser = result.rows[0].id;
+                    res.redirect("/");
+                } else {
+                    res.send("Password Incorrect, please go back and try again.");
+                }
+            } else {
+                res.send("Username not found. Please go back and register, or try logging in again.");
+            }
+            console.log(result.rows);
         }
     } catch (err) {
         console.log(err);
