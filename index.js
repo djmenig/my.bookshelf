@@ -35,12 +35,10 @@ let userBookList = await getData();
 //function to retreive currentUser bookdata if it exists
 async function getData() {
     try {
-        const result = await db.query("SELECT * FROM users JOIN books ON users.id = books.user_id");
         const userBooksQuery = await db.query("SELECT * FROM books WHERE user_id = $1", [currentUser]);
-        // return result.rows;
         return userBooksQuery.rows;
     } catch (err) {
-        console.log("No book data associated with current user id.");
+        console.log(err);
     }
 };
 
@@ -96,8 +94,6 @@ app.post("/login", async (req, res) => {
                 console.log(req.body.username, "has been registered!");
                 const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [req.body.username]);
                 currentUser = usernameQuery.rows[0].id;
-                console.log("Username Query: ", usernameQuery.rows[0].id);
-                console.log("currentUser: ", currentUser);
                 res.redirect("/");
             }
         } else if (req.body.action === 'login') {
