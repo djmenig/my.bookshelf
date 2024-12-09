@@ -36,7 +36,13 @@ let userBookList = await getData();
 async function getData() {
     try {
         const userBooksQuery = await db.query("SELECT * FROM books WHERE user_id = $1", [currentUser]);
-        return userBooksQuery.rows;
+        if (userBooksQuery.rows.length > 0) {
+            return userBooksQuery.rows;
+        } else {
+            console.log("No books associated with current user id");
+            return userBooksQuery.rows;
+        }
+        console.log(userBooksQuery.rows)
     } catch (err) {
         console.log(err);
     }
