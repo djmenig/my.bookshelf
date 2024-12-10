@@ -116,7 +116,6 @@ app.post("/login", async (req, res) => {
             } else {
                 res.send("Username not found. Please go back and register, or try logging in again.");
             }
-            console.log(result.rows);
         }
     } catch (err) {
         console.log(err);
