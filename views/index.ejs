@@ -23,9 +23,11 @@
                 <% let usernameForBookshelf = ""; %>
                 <% currentUsername === "default" ? usernameForBookshelf = "" : usernameForBookshelf = currentUsername + "'s Bookshelf"; %>
                 <li><a class="userBookshelfName"><%= usernameForBookshelf %></a></li>
-                <li><button id="addBookBtn">Add Book</button>
-                <li><button id="loginBtn">Log In</button></li>
-                <!-- make login button dynamic -->
+
+                <!-- conditional for displaying add book button -->
+                <% if (currentUsername != "default") { %> <li><button id="addBookBtn">Add Book</button> <% } %>
+
+                <li><button id="loginBtn">Log In / Register</button></li>
             </ul>
         </nav>
 
