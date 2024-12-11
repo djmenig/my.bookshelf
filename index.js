@@ -1,31 +1,23 @@
 import express from "express";
 import axios from "axios";
 import pg from "pg";
+import env from "dotenv";
 
 const app = express();
 const port = 6543;
+env.config();
 
 app.use(express.urlencoded({ extended: true })); //bodyParser
 app.use(express.static("public"));
 
-////////// local connection //////////
+////////// Using environment variable file for DB connection //////////
 const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "my.Bookshelf",
-    password: "$5D21o80n$",
-    port: "5432",
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DATABASE,
+    password: process.env.PG_PASSWORD,
+    port: process.env.PG_PORT,
 });
-
-//remote connection (supabase.com)
-// const db = new pg.Client({
-//     user: "postgres.gaqrzvbspireqzthsptb",
-//     host: "aws-0-us-west-1.pooler.supabase.com",
-//     database: "postgres",
-//     password: "jZUFk1zuXEL#eB",
-//     port: "6543",
-// });
-
 db.connect();
 
 let currentUser = 1;
