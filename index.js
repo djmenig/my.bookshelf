@@ -2,10 +2,22 @@ import express from "express";
 import axios from "axios";
 import pg from "pg";
 import env from "dotenv";
+import session from "express-session";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import GoogleStrategy from "passport-google-oauth2";
 
 const app = express();
 const port = 6543;
 env.config();
+
+app.use(
+    session({
+       secret: process.env.SESSION_SECRET,
+       resave: false,
+       saveUninitialized: true, 
+    })
+);
 
 app.use(express.urlencoded({ extended: true })); //bodyParser
 app.use(express.static("public"));
