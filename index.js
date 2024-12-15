@@ -1,6 +1,7 @@
 import express from "express";
 import axios from "axios";
 import pg from "pg";
+import bcrypt from "bcrypt";
 import env from "dotenv";
 import session from "express-session";
 import passport from "passport";
@@ -9,6 +10,7 @@ import GoogleStrategy from "passport-google-oauth2";
 
 const app = express();
 const port = 6543;
+const saltRounds = 10;
 env.config();
 
 app.use(
@@ -93,30 +95,50 @@ app.post("/deleteBook", async (req, res) => {
 
 //Login into or Register user account
 app.post("/login", async (req, res) => {
+    const username = req.body.username;
+    const loginPassword = req.body.password;
+
     try {
         if (req.body.action === 'register') {
             //register user account to db if username does not exist
-            const result = await db.query("SELECT * FROM users WHERE username = $1", [req.body.username]);
+            const result = await db.query("SELECT * FROM users WHERE username = $1", [username]);
             if (result.rows.length > 0) {
                 res.send("Username already exists. Please go back and choose another username or login.");
             } else {
-                await db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [req.body.username, req.body.password])
-                console.log(req.body.username, "has been registered!");
-                const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [req.body.username]);
-                currentUser = usernameQuery.rows[0].id;
-                res.redirect("/");
+                //Password Hashing
+                bcrypt.hash(loginPassword, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.log("Error hashing password:", err);
+                    } else {
+                        await db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, hash])
+                        console.log(username, "has been registered!");
+                        const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [username]);
+                        currentUser = usernameQuery.rows[0].id;
+                        res.redirect("/");
+                    }
+                });
             }
         } else if (req.body.action === 'login') {
             //login with db user account
             const result = await db.query("SELECT * FROM users WHERE username = $1", [req.body.username]);
             if (result.rows.length > 0) {
                 //check password
-                if (result.rows[0].password === req.body.password) {
-                    currentUser = result.rows[0].id;
-                    res.redirect("/");
-                } else {
-                    res.send("Password Incorrect, please go back and try again.");
-                }
+                const user = result.rows[0];
+                const storedHashedPassword = user.password;
+                bcrypt.compare(loginPassword, storedHashedPassword, async (err, result) => {
+                    if (err) {
+                        console.log("Error comparing passwords:", err);
+                    } else {
+                        if (result) {
+                            console.log(username, "has been logged in!");
+                            const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [username]);
+                            currentUser = usernameQuery.rows[0].id;
+                            res.redirect("/");
+                        } else {
+                            res.send("Password Incorrect, please go back and try again.");
+                        }
+                    }
+                });
             } else {
                 res.send("Username not found. Please go back and register, or try logging in again.");
             }
