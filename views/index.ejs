@@ -19,14 +19,24 @@
     <main>
         <nav>
             <ul>
-                <li><a class="userBookshelfName"><%= currentUsername %>'s Bookshelf</a></li>
-                <li><button id="addBookBtn">Add Book</button>
+                <!-- conditional for displaying username -->
+                <% let usernameForBookshelf = ""; %>
+                <% currentUsername === "default" ? usernameForBookshelf = "" : usernameForBookshelf = currentUsername + "'s Bookshelf"; %>
+                <li><a class="userBookshelfName"><%= usernameForBookshelf %></a></li>
+
+                <!-- conditional for displaying add book button -->
+                <% if (currentUsername != "default") { %> <li><button id="addBookBtn">Add Book</button> <% } %>
+
+                <!-- conditional for loginBtn text -->
+                 <% let loginBtnText = "Log In / Register";
+                    if (currentUsername != "default") { loginBtnText = "Change User"}; %>
+                <li><button id="loginBtn"><%= loginBtnText %></button></li>
             </ul>
         </nav>
 
         <!-- modal  -->
         <%- include("partials/addBookForm.ejs") %>
-        
+        <%- include("partials/userLoginForm.ejs") %>
         <section class="bookListSection">
             <% if(userBookList.length == 0) { %>
                 <h3 class="noBooksMessage">Whoops!<br>There are no books on the shelf!</h3>

@@ -1,40 +1,57 @@
 import express from "express";
 import axios from "axios";
 import pg from "pg";
+import bcrypt from "bcrypt";
+import env from "dotenv";
+import session from "express-session";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import GoogleStrategy from "passport-google-oauth2";
 
 const app = express();
 const port = 6543;
+const saltRounds = 10;
+env.config();
+
+app.use(
+    session({
+       secret: process.env.SESSION_SECRET,
+       resave: false,
+       saveUninitialized: true, 
+    })
+);
 
 app.use(express.urlencoded({ extended: true })); //bodyParser
 app.use(express.static("public"));
 
-//local connection
-// const db = new pg.Client({
-//     user: "postgres",
-//     host: "localhost",
-//     database: "my.Bookshelf",
-//     password: "$5D21o80n$",
-//     port: "5432",
-// });
-
-//remote connection (supabase.com)
+////////// Using environment variable file for DB connection //////////
 const db = new pg.Client({
-    user: "postgres.gaqrzvbspireqzthsptb",
-    host: "aws-0-us-west-1.pooler.supabase.com",
-    database: "postgres",
-    password: "jZUFk1zuXEL#eB",
-    port: "6543",
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DATABASE,
+    password: process.env.PG_PASSWORD,
+    port: process.env.PG_PORT,
 });
-
 db.connect();
 
 let currentUser = 1;
 
-//bookdata
+//////////bookdata//////////
 let userBookList = await getData();
+//function to retreive currentUser bookdata if it exists
 async function getData() {
-    const result = await db.query("SELECT * FROM users JOIN books ON users.id = books.user_id");
-    return result.rows;
+    try {
+        const userBooksQuery = await db.query("SELECT * FROM books WHERE user_id = $1", [currentUser]);
+        if (userBooksQuery.rows.length > 0) {
+            return userBooksQuery.rows;
+        } else {
+            console.log("No books associated with current user id");
+            return userBooksQuery.rows;
+        }
+        console.log(userBooksQuery.rows)
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 //homepage: initial data fetch and render of user & books tables
@@ -74,6 +91,61 @@ app.post("/edit", async (req, res) => {
 app.post("/deleteBook", async (req, res) => {
     await db.query("DELETE FROM books WHERE title = $1", [req.body.bookTitle]);
     res.redirect("/");
+});
+
+//Login into or Register user account
+app.post("/login", async (req, res) => {
+    const username = req.body.username;
+    const loginPassword = req.body.password;
+
+    try {
+        if (req.body.action === 'register') {
+            //register user account to db if username does not exist
+            const result = await db.query("SELECT * FROM users WHERE username = $1", [username]);
+            if (result.rows.length > 0) {
+                res.send("Username already exists. Please go back and choose another username or login.");
+            } else {
+                //Password Hashing
+                bcrypt.hash(loginPassword, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.log("Error hashing password:", err);
+                    } else {
+                        await db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, hash])
+                        console.log(username, "has been registered!");
+                        const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [username]);
+                        currentUser = usernameQuery.rows[0].id;
+                        res.redirect("/");
+                    }
+                });
+            }
+        } else if (req.body.action === 'login') {
+            //login with db user account
+            const result = await db.query("SELECT * FROM users WHERE username = $1", [req.body.username]);
+            if (result.rows.length > 0) {
+                //check password
+                const user = result.rows[0];
+                const storedHashedPassword = user.password;
+                bcrypt.compare(loginPassword, storedHashedPassword, async (err, result) => {
+                    if (err) {
+                        console.log("Error comparing passwords:", err);
+                    } else {
+                        if (result) {
+                            console.log(username, "has been logged in!");
+                            const usernameQuery = await db.query("SELECT id FROM users WHERE username = $1", [username]);
+                            currentUser = usernameQuery.rows[0].id;
+                            res.redirect("/");
+                        } else {
+                            res.send("Password Incorrect, please go back and try again.");
+                        }
+                    }
+                });
+            } else {
+                res.send("Username not found. Please go back and register, or try logging in again.");
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 app.listen(port, () => {
