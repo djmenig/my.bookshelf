@@ -27,7 +27,10 @@
                 <!-- conditional for displaying add book button -->
                 <% if (currentUsername != "default") { %> <li><button id="addBookBtn">Add Book</button> <% } %>
 
-                <li><button id="loginBtn">Log In / Register</button></li>
+                <!-- conditional for loginBtn text -->
+                 <% let loginBtnText = "Log In / Register";
+                    if (currentUsername != "default") { loginBtnText = "Change User"}; %>
+                <li><button id="loginBtn"><%= loginBtnText %></button></li>
             </ul>
         </nav>
 
